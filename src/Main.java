@@ -10,7 +10,7 @@ public class Main {
                 4, 43, 16, 27, 48, 8, 31, 11, 25, 39,
                 18, 46, 6, 29, 40, 2, 35, 21, 44, 13,
                 17, 49, 20, 33, 15, 37, 30, 41, 24, 42);
-        quicksort(numbersToSort, 0, numbersToSort.size());
+        quicksort(numbersToSort, 0, numbersToSort.size() - 1);
         System.out.println(numbersToSort);
     }
 
