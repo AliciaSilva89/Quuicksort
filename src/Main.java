@@ -5,34 +5,36 @@ public class Main {
     public static void main(String[] args) {
         //Parte da jay
         List<Integer> numbersToSort = Arrays.asList( //Geramento do vetor comos numeros
-                12, 47, 5, 23, 38, 1, 14, 50, 32, 9,
-                45, 7, 19, 26, 36, 10, 28, 3, 34, 22,
-                4, 43, 16, 27, 48, 8, 31, 11, 25, 39,
-                18, 46, 6, 29, 40, 2, 35, 21, 44, 13,
-                17, 49, 20, 33, 15, 37, 30, 41, 24, 42);
+         4, 3, 2, 5, 1, 3, 2, 9, 0, 2);
+
+        System.out.println(numbersToSort);
         quicksort(numbersToSort, 0, numbersToSort.size() - 1);
         System.out.println(numbersToSort);
     }
 
     public static int partition(List<Integer> numbersToSort, int begin, int end) { // numbersToSort = lista de numeros, begin = inicial, end= final
         //Parte Sami
-        int pivot = numbersToSort.get(begin); // pivot vai começar no indice de comparaçao inicial
+        int pivot = numbersToSort.get(begin);
+        int index = begin + 1;
+        int subIndex = end; // criei um subindice p manipular os dados de end, pq alterar end diretamente tava dando bug em toda a ordenação
 
-        for (int index = begin + 1; index < end; index++) {
-            if (numbersToSort.get(index) <= pivot){
+
+        while (index <= subIndex) {
+            // erro lógico: deixar como < subindice tava ordenando tudo errado, uma metade ficava ordenada e outra nao
+            if (numbersToSort.get(index) <= pivot) {
                 index++;
-            }else if (numbersToSort.get(end) > pivot){
-                end--;
-            }else {
+
+            } else {
                 int temporary = numbersToSort.get(index);
-                numbersToSort.set(index, numbersToSort.get(end));
-                numbersToSort.set(end, temporary);
+                numbersToSort.set(index, numbersToSort.get(subIndex)); // alterei p subIndice tudo q envolvia manipulaçao do end pq ou dava algum erro de exceçao ou ordenada tudo errado de novo, vou fazer um comparativo dos erros e deixar escrito num arquivo de texto explicando
+                numbersToSort.set(subIndex, temporary);
+                subIndex--;
             }
             // laço continua verificando os elementos seguintes da lista (begin + 2), (begin + 3), até chegar ao fim
         }
-        numbersToSort.set(begin, end); // valor do começo recebe o valor do final
-        numbersToSort.set(end, pivot); // valor do final recebe o valor do pivot
-        return end;
+        numbersToSort.set(begin, numbersToSort.get(subIndex)); // valor do começo recebe o valor do final
+        numbersToSort.set(subIndex, pivot); // valor do final recebe o valor do pivot
+        return subIndex;
     }
 
     private static void quicksort(List<Integer> numbersToSort, int begin, int end) {
