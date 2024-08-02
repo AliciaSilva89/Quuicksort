@@ -4,14 +4,46 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         //Parte da jay
-        List<Integer> numbersToSort = Arrays.asList( //Geramento do vetor comos numeros
-         4, 3, 2, 5, 1, 3, 2, 9, 0, 2);
-
-        System.out.println(numbersToSort);
-        quicksort(numbersToSort, 0, numbersToSort.size() - 1);
-        System.out.println(numbersToSort);
+      boolean control = true;
+        while (control) {
+            showMenu();
+            int menu = getUserMenu();
+            if (menu == 1) {
+                quicksort(numbersToSort, 0, numbersToSort.size() - 1);
+                System.out.println(numbersToSort);
+            } else if (menu == 2) {
+                int size = numbersToSort.size();
+                quicksort(numbersToSort, 0, numbersToSort.size() - 1); //ordena
+                for (int i = 0; i < size / 2; i++) { //percorre 
+                    int temporaria = numbersToSort.get(i);
+                    numbersToSort.set(i, numbersToSort.get(size - 1 - i));
+                    numbersToSort.set(size - 1 - i, temporaria); //inverte 
+                }
+                System.out.println(" " +numbersToSort);
+            } else if (menu == 3) {
+                System.out.println("Fim do programa.");
+                control = false; //finaliza
+            } else {
+                System.out.println("Opção invalida."); 
+            }
+        }
     }
 
+    private static void showMenu(){
+        System.out.println("Escolha sua opção: \n"+
+                "1 para ver ordenar lista \n"+
+                "2 para ver lista ao contrario \n"+
+                "3 para sair");
+    }
+
+    private static int getUserMenu(){
+        System.out.println("Escolha sua opção: ");
+        while (!scanner.hasNextInt()){
+            scanner.next();
+        }
+        return scanner.nextInt(); //retorna scanner quando dada opção invalida
+    }
+    
     public static int partition(List<Integer> numbersToSort, int begin, int end) { // numbersToSort = lista de numeros, begin = inicial, end= final
         //Parte Sami
         int pivot = numbersToSort.get(begin);
